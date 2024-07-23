@@ -19,7 +19,7 @@ jobs:
         git config --global user.email "github-actions@github.com"
 
     - name: Clone target repository
-      run: git clone https://user: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@huggingface.co/datasets/your-username/udio_dataset target-repo
+      run: git clone https://user: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@huggingface.co/datasets/FreddyE/udio_dataset target-repo
 
     - name: Fetch file list from source repository
       run: |
