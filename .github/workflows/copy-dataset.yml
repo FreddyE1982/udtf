@@ -18,20 +18,25 @@ jobs:
         git config --global user.name "github-actions"
         git config --global user.email "github-actions@github.com"
 
-    - name: Clone original dataset repository
-      run: git clone https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
+    - name: Clone target repository
+      run: git clone https://user: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@huggingface.co/datasets/your-username/udio_dataset target-repo
 
-    - name: Initialize new dataset repository
+    - name: Fetch file list from source repository
       run: |
-        mkdir new-dataset
-        cd new-dataset
-        git init --bare
+        mkdir -p source-repo
+        cd source-repo
+        wget --header="Authorization: Bearer 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" https://huggingface.co/datasets/blanchon/udio_dataset/raw/main?recursive=1 -O file_list.json
+        cd ..
 
-    - name: Push to new Hugging Face repository
+    - name: Download and push files
       run: |
-        cd original-dataset
-        git remote add new-dataset ../new-dataset
-        git push new-dataset --all
-        cd ../new-dataset
-        git remote add origin https://user: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@huggingface.co/datasets/FreddyE/udtf
-        git push origin --all
+        cd source-repo
+        for file_url in $(jq -r '.tree[] | select(.type=="blob") | .path' file_list.json); do
+          wget --header="Authorization: Bearer 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" https://huggingface.co/datasets/blanchon/udio_dataset/raw/main/$file_url -O ../target-repo/$file_url
+          cd ../target-repo
+          git add $file_url
+          git commit -m "Add $file_url"
+          cd ../source-repo
+        done
+        cd ../target-repo
+        git push origin main
