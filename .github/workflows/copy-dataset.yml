@@ -19,10 +19,19 @@ jobs:
         git config --global user.email "github-actions@github.com"
 
     - name: Clone original dataset repository
-      run: git clone --mirror https://user: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@huggingface.co/datasets/blanchon/udio_dataset udio_dataset
+      run: git clone https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
+
+    - name: Initialize new dataset repository
+      run: |
+        mkdir new-dataset
+        cd new-dataset
+        git init --bare
 
     - name: Push to new Hugging Face repository
       run: |
-        cd udio_dataset
-        git remote add new-dataset https://user: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@huggingface.co/datasets/FreddyE/udtf
-        git push new-dataset --mirror
+        cd original-dataset
+        git remote add new-dataset ../new-dataset
+        git push new-dataset --all
+        cd ../new-dataset
+        git remote add origin https://user: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@huggingface.co/datasets/FreddyE/udtf
+        git push origin --all
