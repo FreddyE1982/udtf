@@ -18,6 +18,11 @@ jobs:
       run: |
         git lfs install --skip-smudge
 
+    - name: Disable LFS pre-push hook
+      run: |
+        git config --global lfs.skipdownload true
+        git config --global lfs.skipverify true
+
     - name: clone repository with LFS pointers
       run: git clone https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
 
