@@ -18,8 +18,8 @@ jobs:
       run: |
         git lfs install --skip-smudge
 
-    - name: Shallow clone repository with LFS pointers
-      run: git clone --depth 1 https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
+    - name: clone repository with LFS pointers
+      run: git clone https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
 
     - name: Push LFS pointers to new repository
       run: |
