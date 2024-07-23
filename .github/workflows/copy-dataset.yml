@@ -23,6 +23,6 @@ jobs:
 
     - name: Push to new Hugging Face repository
       run: |
-        cd original-dataset
+        cd udio_dataset
         git remote add new-dataset https://huggingface.co/datasets/FreddyE1982/udtf
         git push new-dataset --mirror
