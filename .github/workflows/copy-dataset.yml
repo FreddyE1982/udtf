@@ -15,6 +15,7 @@ jobs:
 
     - name: try hugcli
       run: |
+        pip install -U huggingface_hub
         huggingface-cli --help
   
 
