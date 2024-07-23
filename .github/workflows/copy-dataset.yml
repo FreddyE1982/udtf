@@ -12,12 +12,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Install Git LFS
-      run: |
-        apt-get update
-        apt-get install -y git-lfs
-        git lfs install
+  
 
     - name: Configure Git LFS to skip smudge (do not download actual files)
       run: |
