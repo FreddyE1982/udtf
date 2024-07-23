@@ -19,10 +19,10 @@ jobs:
         git config --global user.email "github-actions@github.com"
 
     - name: Clone original dataset repository
-      run: git clone --mirror https://huggingface.co/datasets/blanchon/udio_dataset/ udio_dataset
+      run: git clone --mirror https://user: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@huggingface.co/datasets/blanchon/udio_dataset
 
     - name: Push to new Hugging Face repository
       run: |
         cd original-dataset
-        git remote add new-dataset https://huggingface.co/datasets/Freddy1982/udtf
+        git remote add new-dataset https://huggingface.co/datasets/FreddyE1982/udtf
         git push new-dataset --mirror
