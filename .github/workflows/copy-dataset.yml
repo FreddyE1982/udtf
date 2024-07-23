@@ -12,6 +12,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: try hugcli
+      run: |
+        huggingface-cli --help
   
 
     - name: Configure Git LFS to skip smudge (do not download actual files)
