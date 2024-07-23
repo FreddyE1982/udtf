@@ -1,0 +1,28 @@
+name: Copy Dataset to Hugging Face
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  copy-dataset:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Git
+      run: |
+        git config --global user.name "github-actions"
+        git config --global user.email "github-actions@github.com"
+
+    - name: Clone original dataset repository
+      run: git clone --mirror https://huggingface.co/datasets/blanchon/udio_dataset/ udio_dataset
+
+    - name: Push to new Hugging Face repository
+      run: |
+        cd original-dataset
+        git remote add new-dataset https://huggingface.co/datasets/Freddy1982/udtf
+        git push new-dataset --mirror
