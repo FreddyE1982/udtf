@@ -19,7 +19,11 @@ jobs:
         git config --global user.email "github-actions@github.com"
 
     - name: Clone original dataset repository
+<<<<<<< HEAD
       run: git clone --mirror https://user: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@huggingface.co/datasets/blanchon/udio_dataset
+=======
+      run: git clone --mirror https://huggingface.co/datasets/blanchon/udio_dataset/
+>>>>>>> c47b48ee6d085a757a0f00ccf7b74552886f7574
 
     - name: Push to new Hugging Face repository
       run: |
