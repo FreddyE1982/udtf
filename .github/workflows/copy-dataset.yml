@@ -25,5 +25,5 @@ jobs:
       run: |
         cd original-dataset
         git remote set-url origin https://user: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@huggingface.co/datasets/FreddyE/udtf
-        git push origin main
+        git push origin main --force
 
