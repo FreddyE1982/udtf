@@ -13,30 +13,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up Git
+    - name: Install Git LFS
       run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
+        apt-get update
+        apt-get install -y git-lfs
+        git lfs install
 
-    - name: Clone target repository
-      run: git clone https://user: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@huggingface.co/datasets/FreddyE/udtf target-repo
-
-    - name: Fetch file list from source repository
+    - name: Configure Git LFS to skip smudge (do not download actual files)
       run: |
-        mkdir -p source-repo
-        cd source-repo
-        wget --header="Authorization: Bearer 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" https://huggingface.co/datasets/blanchon/udio_dataset/raw/main?recursive=1 -O file_list.json
-        cd ..
+        git lfs install --skip-smudge
 
-    - name: Download and push files
+    - name: Shallow clone repository with LFS pointers
+      run: git clone --depth 1 https://user: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@huggingface.co/datasets/blanchon/udio_dataset original-dataset
+
+    - name: Push LFS pointers to new repository
       run: |
-        cd source-repo
-        for file_url in $(jq -r '.tree[] | select(.type=="blob") | .path' file_list.json); do
-          wget --header="Authorization: Bearer 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" https://huggingface.co/datasets/blanchon/udio_dataset/raw/main/$file_url -O ../target-repo/$file_url
-          cd ../target-repo
-          git add $file_url
-          git commit -m "Add $file_url"
-          cd ../source-repo
-        done
-        cd ../target-repo
+        cd original-dataset
+        git remote set-url origin https://user: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@huggingface.co/datasets/FreddyE/udtf
         git push origin main
+
